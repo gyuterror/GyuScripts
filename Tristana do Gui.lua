@@ -627,6 +627,7 @@ end
 -- Adjust Our Skills Range --
 function UpdateRange()
 	eRange = (((myHero.level * 9) - 9) + 600)
+	rRange = (((myHero.level * 9) - 9) + 600)
 end 
 
 -- Object Handling Functions --
@@ -768,9 +769,7 @@ local SOWConfig, ts, MyTrueRange
 local HitBoxSize = 65
 local lastAttack = GetTickCount()
 local walkDistance = 300
-local lastWindUpTime = 0
-local lastAttackCD = 0
- 
+
 --Channeling related
 local lastAnimation = ""
 local lastChanneling = 0
@@ -836,18 +835,7 @@ function OnTick()
         end
     end
 end
-function heroCanMove()
-    return (GetTickCount() + GetLatency()/2 > lastAttack + lastWindUpTime + 20)
-end
-function timeToShoot()
-    return (GetTickCount() + GetLatency()/2 > lastAttack + lastAttackCD)
-end
-function moveToCursor()
-        if GetDistance(mousePos) > 50 or lastAnimation == "Idle1" then
-                local moveToPos = myHero + (Vector(mousePos) - myHero):normalized()*walkDistance
-                myHero:MoveTo(moveToPos.x, moveToPos.z)
-        end
-end
+
 function OnDraw()
     if not myHero.dead and SOWConfig.drawCircles then
                 DrawCircle(myHero.x, myHero.y, myHero.z, MyTrueRange, 0x19A712)
